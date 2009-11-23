@@ -59,6 +59,7 @@ class Job:
         self.input = None
         self.output = None
         self.watermark = None
+        self.notification_url = None
 
         self.result = {}
         self.errors = []
@@ -84,6 +85,9 @@ class Job:
                                 params.get('watermark_user', None),
                                 params.get('watermark_password', None))
 
+            if 'notification_url' in params:
+       self.set_notification_url(params['notification_url'])
+
             if 'send' in params:
                 if params['send']:
                     self.send()
@@ -99,6 +103,10 @@ class Job:
     def set_watermark(self, url, user=None, password=None):
         """Sets watermark file data."""
         self.watermark = JobWatermarkFile(url, user, password)
+
+    def set_notification_url(self, notify_url):
+        """Sets the notification url"""
+        self.notification_url = notify_url
 
     def validate(self):
         """Checks if data are correct and ready to send."""
@@ -139,6 +147,11 @@ class Job:
             recipe_name = doc.createElement('recipe-name')
             recipe_name.appendChild(doc.createTextNode(self.recipe_name))
             api_req.appendChild(recipe_name)
+
+   if self.notification_url: 
+            notify_url = doc.createElement('notification-url')
+            notify_url.appendChild(doc.createTextNode(self.notification_url))  
+            api_req.appendChild(notify_url)
        
         #file-locations node
         file_locations = doc.createElement('file-locations')
