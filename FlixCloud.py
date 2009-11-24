@@ -86,7 +86,7 @@ class Job:
                                 params.get('watermark_password', None))
 
             if 'notification_url' in params:
-       self.set_notification_url(params['notification_url'])
+                self.set_notification_url(params['notification_url'])
 
             if 'send' in params:
                 if params['send']:
@@ -148,7 +148,7 @@ class Job:
             recipe_name.appendChild(doc.createTextNode(self.recipe_name))
             api_req.appendChild(recipe_name)
 
-   if self.notification_url: 
+        if self.notification_url: 
             notify_url = doc.createElement('notification-url')
             notify_url.appendChild(doc.createTextNode(self.notification_url))  
             api_req.appendChild(notify_url)
